@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java-library'
+}
+
+group = 'dev.be'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// 기본값은 true
+// true일경우 oo.jar로 생성됨
+// application을 실행하기 위한 디펜던시들이 있기때문에 module-common은 실행가능한 자르파일을 만들필요가 없기때문에
+tasks.bootJar {
+    enabled = false
+}
+
+// bootJar -> xxx.jar                               java -jar 로 실행이 가능
+// jar     -> xxx-plain.jar (디펜던시를 포함하지 않는다)    실행이 불가능
+tasks.jar {
+    enabled = true
+}
+
+//  ./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
+// debug -> info -> warn -> error
+

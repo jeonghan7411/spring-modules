@@ -1,0 +1,6 @@
+rootProject.name = 'multimodule'
+
+// 모듈을 가지고있는것을 작성해줘야함
+
+include 'module-api'
+include 'module-common'
